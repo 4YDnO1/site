@@ -7,13 +7,13 @@ $(document).ready(() => {
 	Inputmask({regex:"[a-zA-Z0-9@$\.]{6,20}","placeholder":""}).mask('input[name="password"]');
 	Inputmask({regex:"[a-zA-Z0-9@$\.]{6,20}","placeholder":""}).mask('input[name="password_repeat"]');
 
-	$("form#registration").validate({
+	$("form#registration_form").validate({
 		rules: {
 			surname: {required: true, minlength: 6},
 			name: {required: true, minlength: 2},
 			patronymic: {required: true, minlength: 6},
-			login: {required: true, minlength: 5, remote: {type:'GET', url: apip+'/users/check_login.php'}},
-			email: {required: true, email: true, remote: {type:'GET', url: apip+'/users/check_email.php'}},
+			login: {required: true, minlength: 5, remote: {type:'GET', url: apip+'/users/user_check_login.php'}},
+			email: {required: true, email: true, remote: {type:'GET', url: apip+'/users/user_check_email.php'}},
 			password: {required: true, minlength: 6},
 			password_repeat: {required: true, equalTo: "#password"},
 			rules: {required: true},
@@ -50,11 +50,11 @@ $(document).ready(() => {
 		},
 		submitHandler: function(form, e) {
 			e.preventDefault();
-			post(new FormData(form), apip + '/users/registration.php', function(data) {
-				if (data.res_status) {
+			post(new FormData(form), apip + '/users/user_registration.php', function(data) {
+				if (data.status) {
 					window.location.reload();
 				} else {
-					$('.form-info').html(`<label class="error" for="${data.res_error_field}"> ${data.res_message} </label>`);
+					$('.form-info').html(`<label class="error" for="${data.error_field}"> ${data.message} </label>`);
 				}
 			})
 		},

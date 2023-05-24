@@ -5,7 +5,7 @@ $(document).ready(() => {
 
 	$("form#auth").validate({
 		rules: {
-			login: {required: true, minlength: 5, remote: {type:'GET', url: apip+'/users/check_login_exist.php'}},
+			login: {required: true, minlength: 5, remote: {type:'GET', url: apip+'/users/user_check_login_exist.php'}},
 			password: {required: true, minlength: 6},
 		},
 		messages: {
@@ -20,11 +20,11 @@ $(document).ready(() => {
 		},
 		submitHandler: function(form, e) {
 			e.preventDefault();
-			post(new FormData(form), apip + '/users/login.php', function(data) {
-				if (data.res_status) {
+			post(new FormData(form), apip + '/users/user_login.php', function(data) {
+				if (data.status) {
 					window.location.reload();
 				} else {
-					$('.form-info').html(`<label class="error" for="${data.res_error_field}"> ${data.res_message} </label>`);
+					$('.form-info').html(`<label class="error" for="${data.error_field}"> ${data.message} </label>`);
 				}
 			})
 		},

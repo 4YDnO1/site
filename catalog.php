@@ -4,8 +4,8 @@
 <html lang="ru"><head>
 
 	<?php
-		$tilte = "Каталог. ".$appn;
-		require_once $sp."/require/head.php";
+		$title = "Каталог | ".$app_name;
+		require_once $server_path."/require/head.php";
 	?>
 	<link rel="stylesheet" href="/assets/styles/base.css">
 	<link rel="stylesheet" href="/assets/librarys/tailwind/tailwind-index.min.css">
@@ -13,11 +13,11 @@
 
 </head><body><div class="page-wrapper">
 
-	<?php require_once $sp."/require/header.php"; ?>
+	<?php require_once $server_path."/require/header.php"; ?>
 	<main class="main">
-		<?php require_once $sp."/pages/catalog.php"; ?>
+		<?php require_once $server_path."/pages/catalog.php"; ?>
 	</main>
-	<?php require_once $sp."/require/footer.php"; ?>
+	<?php require_once $server_path."/require/footer.php"; ?>
 
 </div><div class="scripts-wrapper">
 
@@ -25,5 +25,6 @@
 	<script src="/assets/librarys/validate/jquery.validate.min.js"></script>
 	<script src="/assets/librarys/maskedinput/jquery.inputmask.bundle.min.js"></script>
 	<script src="/assets/scripts/common.js"></script>
+	<script src="/assets/scripts/catalog.js"></script>
 
 </div></body></html>

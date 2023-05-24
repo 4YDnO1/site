@@ -4,6 +4,23 @@
 	box-sizing: border-box
 	font-family: sans-serif
 
+img
+	object-fit: cover
+	max-width: 100%
+
+table
+	border-collapse: collapse
+
+td, th
+	padding: 5px 10px
+
+table, td, th
+	border: 1px solid gray
+
+.table_sort th
+	cursor: pointer
+
+
 .page-wrapper
 	width: 100%
 	min-height: 100vh
@@ -14,6 +31,18 @@
 .header
 	display: flex
 	flex-grow: 0
+
+.page_link
+	padding: 5px 15px
+	border: 1px solid green
+	border-radius: 15px
+	background-color: rgba(0, 255, 0, 0.3)
+	transition: all .5s ease-in-out
+	&:hover
+		background-color: rgba(0, 255, 0, 0.5) !important
+		color: #fff
+		transition: all .5s ease-in-out
+
 .main
 	display: flex
 	flex-grow: 1
@@ -51,6 +80,32 @@ form select
 
 form button
 	border-radius: 15px
-	outline: 2px solid blue
+	outline: 2px solid green
+	background-color: rgba(0, 255, 0, 0.3) !important
 	padding: 3px 10px
 	min-width: 0
+	transition: all .5s ease-in-out
+	&:hover
+		background-color: rgba(0, 255, 0, 0.5) !important
+		color: #fff
+		transition: all .5s ease-in-out
+
+
+p.success
+	color: lime
+	background-color: rgba(0, 255, 0, 0.2)
+	border: solid 1px green
+	border-radius: 5px
+	padding: 5px 20px
+	display: flex
+	justify-content: center
+	align-items: center
+p.error
+	color: red
+	background-color: rgba(255, 0, 0, 0.2)
+	border: solid 1px red
+	border-radius: 5px
+	padding: 5px 20px
+	display: flex
+	justify-content: center
+	align-items: center

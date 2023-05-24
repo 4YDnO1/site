@@ -1,13 +1,18 @@
 <?php
 
-	if (isset($_POST['registration'])) {
-		$password_hash = password_hash($_POST['password'], PASSWORD_BCRYPT);
-		$q =
+	if (isset($post["registration"])) {
+		$password_hash = password_hash($post["password"], PASSWORD_BCRYPT);
+		$query =
 		"INSERT INTO `users`
 		(`user_surnme`, `user_name`, `user_patronymic`, `login`, `email`, `password`)
-		('$_POST[surname]', '$_POST[name]', '$_POST[patronymic]', '$_POST[login]'), '$_POST[email]', '$password_hash'
+		('$post[surname]', '$post[name]', '$post[patronymic]', '$post[login]'), '$post[email]', '$password_hash'
 		";
-		$res = mysqli_query($c, $q);
+		$result = mysqli_query($connection, $query);
+
+		if ($result) {
+			header('Location: /login.php');
+			exit(0);
+		}
 	}
 
 ?>
@@ -15,12 +20,12 @@
 
 <section class="wrapper flex flex-col grow items-center justify-center gap-4">
 
-	<div class="container content-container max-w-[600px]">
-		<h2 class="text-lg">Регистрация</h2>
+	<div class="container content-container">
+		<h2 class="text-lg max-w-[600px] mx-auto">Регистрация</h2>
 	</div>
 
-	<div class="container content-container max-w-[600px]">
-		<form action="" method="post" id="registration">
+	<div class="container content-container">
+		<form action="" method="post" id="registration_form" class="max-w-[600px] mx-auto">
 			<fieldset class="flex flex-col gap-6">
 
 				<div class="flex flex-col gap-2">
@@ -56,7 +61,7 @@
 					<label for="rules">Согласие с правилами</label>
 				</div>
 
-				<button name="registration" type="submit">Регистрация</button>
+				<button name="registration_form" type="submit">Регистрация</button>
 			</fieldset>
 			<div class="form-info"></div>
 		</form>

@@ -1,0 +1,348 @@
+@include font-face(Samplino, fonts/Samplino);
+Rendered as CSS:
+
+@font-face {
+font-family: "Samplino";
+src: url("fonts/Samplino.eot?") format("eot"),
+url("fonts/Samplino.woff2") format("woff2"),
+url("fonts/Samplino.woff") format("woff"),
+url("fonts/Samplino.ttf") format("truetype"),
+url("fonts/Samplino.svg#Samplino") format("svg");
+}
+
+
+@font-face
+  font-family: "bingo"
+  src: url('bingo.eot')
+  src: local('bingo')
+  src: url('bingo.svg#bingo') format('svg')
+  src: url('bingo.otf') format('opentype')
+@font-face
+    font-family: "RobotoRegular"
+    src : url("../fonts/RobotoRegular/RobotoRegular.ttf")
+
+
+@import "app/sass/fonts.sass"
+
+
+
+<section class="content-wrapper">
+
+	<div class="content-container container flex justify-center">
+		<a href="/admin/excursions" class="min-w-[250px] max-w-[700px] w-full my-[10px] hover:text-blue-600">Вернуться ко всем экскурсиям</a>
+	</div>
+
+	<div class="content-container container flex justify-center">
+		<h2 class="text-xl min-w-[250px] max-w-[700px] w-full my-[10px]">Изменение Экскурсии № <?=$id?></h2>
+	</div>
+	
+	<div class="content-container container flex justify-center">
+		<form action="" id="excursion_update" class="min-w-[250px] max-w-[700px] w-full bg-blue-200/50">
+
+			<fieldset class="p-3 flex flex-col gap-2">
+				<div class="flex gap-4 max-md:flex-wrap">
+
+					<div class="flex flex-col gap-1 justify-between grow">
+						<label for="image" class="font-bold">Изображение</label>
+						<label for="image">
+							<img class="max-w-[440px] max-h-[350px] rounded" src="<?='/uploads/excursions/'.$ex['image']?>" alt="Экскурсия">
+						</label>
+						<input type="file" name="image" id="image" />
+					</div>
+
+					<div class="flex flex-col gap-2 justify-between grow">
+						<input type="hidden" name="id" id="id" value="<?=$ex['id']?>" required />
+
+						<div class="flex flex-col gap-1">
+							<label for="name" class="font-bold">Название</label>
+							<input type="text" name="name" id="name" value="<?=$ex['name']?>" placeholder="<?=$ex['name']?>" required />
+						</div>
+						<div class="flex flex-col gap-1">
+							<label for="price" class="font-bold">Цена</label>
+							<input type="number" name="price" id="price" value="<?=$ex['price']?>" placeholder="<?=$ex['price']?>" required />
+						</div>
+						<div class="flex flex-col gap-1">
+							<label for="amount" class="font-bold">Количество мест</label>
+							<input type="number" name="amount" id="amount" value="<?=$ex['amount']?>" placeholder="<?=$ex['amount']?>" required />
+						</div>
+						<div class="flex flex-col gap-1">
+							<label for="time" class="font-bold">Время экскурсии</label>
+							<input type="number" name="time" id="time" value="<?=$ex['time']?>" placeholder="<?=$ex['days']?>" required />
+						</div>
+						<div class="flex flex-col gap-1">
+							<label for="time" class="font-bold">Дни экскурсии</label>
+							<div class="flex gap-1 flex-wrap">
+								<? foreach($days_names as $key => $day): ?>
+								<div class="flex gap-1 items-center">
+									<label for="day<?=$key?>"><?=$day['prefix']?></label>
+									<input type="checkbox" data-day="day<?=$key?>" name="day<?=$key?>" id="day<?=$key?>" <?=in_array($key, str_split($ex['days']))?'checked':''?> />
+								</div>	
+								<? endforeach; ?>
+							</div>
+						</div>
+						<div class="flex flex-col gap-1">
+							<label for="started" class="font-bold">Время начала</label>
+							<input type="time" name="started" id="started" value="<?=$ex['started']?>" placeholder="<?=$ex['started']?>" required />
+						</div>
+					</div>
+
+				</div>
+
+				<button type="submit" class="rounded bg-white p-1 hover:bg-blue-200">Сохранить изменения</button>
+				<div class="form-info"></div>
+
+			</fieldset>
+		</form>
+	</div>
+</section>
+
+
+
+
+
+
+
+	$("#excursion_update").validate({
+		rules: {
+			name: {required: true},
+			price: {required: true, minlength: 3 , maxlength: 6},
+			amount: {required: true, minlength: 1, maxlength: 3},
+			image: {
+				required: false,
+				fileType: {types: ["image"]},
+				maxFileSize: {"unit": "MB", "size": 2},
+				minFileSize: {"unit": "KB", "size": 1}
+			},
+			time: {required: true, minlength: 1, maxlength: 2},
+			started: {required: true},
+		},
+		messages: {
+			name: {	
+				required: "Вы не ввели Название",
+			},	
+			price: {
+				required: "Вы не ввели Цену",
+				minlength: jQuery.validator.format("Цена должна содержать не меньше {0} цифр"),
+				maxlength: jQuery.validator.format("Количество должно содержать не больше {0} цифр")
+			},
+			amount: {
+				required: "Вы не ввели Количество",
+				minlength: jQuery.validator.format("Количество должно содержать не меньше {0} цифр"),
+				maxlength: jQuery.validator.format("Количество должно содержать не больше {0} цифр")
+			},
+			time: {
+				required: "Вы не выбрали Время экскурсии",
+				minlength: jQuery.validator.format("Время должно содержать не меньше {0} цифр"),
+				maxlength: jQuery.validator.format("Время должно содержать не больше {0} цифр")
+			},
+			image: {
+				fileType: "Недопустимый формат изображения",
+				maxFileSize: "Максимальный размер изображения 2 MB",
+				minFileSize: "Минимальный размер изображения 100 KB"
+			},
+			started: {
+				required: "Вы не выбрали Дату начала поездки",
+			},
+			
+		},
+		submitHandler: function(form, e) {
+			e.preventDefault();
+			post(new FormData(form), apip+'/excursions/'+$('#id').val(), function(data) {
+				if (data.res_status) {
+					$('.form-info').html(`<label class="text-black"> ${data.res_message} </label>`);
+				} else {
+					$('.form-info').html(`<label class="error" for="${data.res_error_field}"> ${data.res_message} </label>`);
+				}
+			})
+		}
+	});
+
+
+
+const site_url = window.location.origin;
+const functions_url = site_url + '/functions';
+
+$(document).ready(function() {
+
+	const getSortTabel = ({ target }) => {
+		const order = (target.dataset.order = -(target.dataset.order || -1));
+		const index = [...target.parentNode.cells].indexOf(target);
+		const collator = new Intl.Collator(['en', 'ru'], { numeric: true });
+		const comparator = (index, order) => (a, b) => order * collator.compare(
+			a.children[index].innerHTML,
+			b.children[index].innerHTML
+		);
+		for(const tBody of target.closest('table').tBodies)
+			tBody.append(...[...tBody.rows].sort(comparator(index, order)));
+		for(const cell of target.parentNode.cells)
+			cell.classList.toggle('sorted', cell === target);
+	};
+	document.querySelectorAll('.table_sort thead')?.forEach(thead => {
+		thead.addEventListener('click', function(event) { getSortTabel(event) });
+	});
+
+	$('.menuToggle').on('click', function() {
+		// Переключить классы активности на меню, кнопке и оверлее
+		$('.main-nav').toggleClass('active');
+		$(this).toggleClass('active');
+		$('.overlay-page').toggleClass('active');
+	});
+
+	$('.overlay-page').on('click', function() {
+		// Убрать классы активности на меню, кнопке и оверлее
+		$('.main-nav').removeClass('active');
+		$('.menuToggle').removeClass('active');
+		$(this).removeClass('active');
+	});
+	
+	
+	const htmlTag = $('html');
+
+	// Плавный скролл до блока .div по клику на .scroll
+	$('a[data-target="anchor"]').on('click', function(){
+		let target = $(this).attr('href'),
+			bl_top = $(target).offset().top - 40;
+
+		$('body, html').animate({scrollTop: bl_top}, 700);
+
+		if (!window.matchMedia('(min-width: 993px)').matches) {
+			$('.main-nav').removeClass('active');
+			$('.menuToggle').removeClass('active');
+			$('.overlay-page').removeClass('active');
+		}
+		return false;
+	});
+	
+	if ($(".slider-certif").length > 0) {
+		const swiper = new Swiper('.slider-certif', {
+			slidesPerView: 3, 
+			spaceBetween: 30,
+			loop: true, 
+			slidesPerGroup: 1, 
+			watchOverflow: true, 
+			navigation: {
+				nextEl: '.swiper-btn-next', 
+				prevEl: '.swiper-btn-prev',
+			},
+			breakpoints: {
+				550: {
+					slidesPerView: 2,
+				},
+			}
+		});
+	}
+
+
+});
+
+
+
+
+
+
+session_start(); // старт сессии
+// текущая запршиваямая страница (её url) без GET параметров (для подсветки активных ссылок)
+$uri = explode('?', $_SERVER["REQUEST_URI"])[0]; 
+
+
+$filter = 'WHERE 1=1 and b.filial_id = '.$_SESSION['user']['filial_id'];
+if(!empty($_GET['surname_filter'])) $filter .= " and b.patient_surname like '%$_GET[surname_filter]%'";
+
+$limit_num = !empty($_GET['limit']) && $_GET['limit'] >= 1 ? $_GET['limit'] : 15; 
+$total = mysqli_fetch_row(mysqli_query($conn, "SELECT COUNT(*) FROM `bookings` AS b $filter"))[0];
+$pages = ceil($total/$limit_num);
+$page = !empty($_GET['page']) ? $_GET['page'] : 1;
+$page = is_numeric($page) && $page >= 1 ? min([$page, $pages]) : 1;  
+$_GET['page'] = $page;
+$kolvo = $limit_num * ($total==0 ? 1 : $page-1);
+$limit = "LIMIT $kolvo, $limit_num";
+
+$query =
+"SELECT   FROM `` AS b
+
+$filter
+ORDER BY `date` ASC, `time` ASC $limit";
+$result = mysqli_query($conn, $query);
+
+
+
+
+
+
+<div class="content-container container flex justify-center py-4">
+	<div class="flex flex-col gap-4 items-center">
+
+		<div class="flex gap-4">
+			<? if ($page != 1): ?>
+				<?php $_GET['page']=$page-1;?>
+				<a href="<?=$uri?>?<?=http_build_query($_GET)?>">Предыдущая</a>
+			<? endif; ?>
+			<p>Страница <?=$page?> из <?=$pages?></p>
+			<? if ($page < $pages): ?>
+				<?php $_GET['page']=$page+1;?>
+				<a href="<?=$uri?>?<?=http_build_query($_GET)?>">Следующая</a>
+				<?php $_GET['page']=$page;?>
+			<? endif; ?>
+		</div>
+
+		<? if ($pages > 1): ?>
+		<div class="flex gap-4">
+			<?php
+				$page_jump = 1;
+				$page_distant = 2 * $page_jump;
+				$start = $page-$page_distant; $end = $page+$page_distant;
+				while ($start < 2) {$start++; $end = $end+1>=$pages ? $end : $end+1;}
+				while ($end >= $pages) {$end--; $start = $start-1<2 ? $start : $start-1;}
+				$_GET['page'] = 1;
+			?>
+			<a class="<?=$page==1?'active':''?>" href="<?=$uri?>?<?=http_build_query($_GET)?>">1</a>
+			<div class="flex gap-2">
+				<?php for($i = $start; $i <= $end; $i+=$page_jump):?>
+					<?php $_GET['page'] = $i;?>
+					<a class="<?=$i==$page?'active':''?>" href="<?=$uri?>?<?=http_build_query($_GET)?>"><?=$i?></a>
+				<?php endfor;?>
+			</div>
+			<?php $_GET['page']=$pages;?>
+			<a class="<?=$page==$pages?'active':''?>" href="<?=$uri?>?<?=http_build_query($_GET)?>"><?=$pages?></a>
+			<?php $_GET['page']=$page;?>
+		</div>
+		<? endif; ?>
+
+	</div>
+</div>
+
+
+
+
+function response(bool $res_status, string $res_message, string $res_error_field, int $res_code, array $res_data = []): void {
+	$data = [
+		'res_status' => $res_status,
+		'res_message' => $res_message,
+		'res_error_field' => $res_error_field,
+		'res_data' => $res_data
+	];
+	http_response_code($res_code);
+	echo json_encode($data, JSON_UNESCAPED_UNICODE);
+	exit(0);
+}
+
+
+if(session_status()===PHP_SESSION_NONE){session_start();}
+$sp = $_SERVER['DOCUMENT_ROOT']; // server folder path
+$dbp = $sp.'/database'; // server database folder path
+$appn = 'EXAutobus'; // name of the application
+
+
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="author"content="Airat Timerbulatov" />
+
+<link rel="icon" type="image/png" href="/assets/images/favicon/favicon-512x512.png" sizes="512x512">
+<title><?=$title ?? 'Ещё одна страница сайта'.$appn?></title>
+
+
+
+
+<?php
+$conn = mysqli_connect("127.0.0.1", "root", "root", "") or die("Error: ".mysqli_error($conn));

@@ -1,11 +1,17 @@
 <?php require_once $_SERVER['DOCUMENT_ROOT']."/require/common.php"; ?>
+<?php
+	if (!isset($_SESSION['user_data']['id'])) {
+		header('Location: /index.php');
+		exit(0);
+	}
+?>
 
 <!DOCTYPE html>
 <html lang="ru"><head>
 
 	<?php
-		$tilte = "Корзина. ".$appn;
-		require_once $sp."/require/head.php";
+		$title = "Корзина | ".$app_name;
+		require_once $server_path."/require/head.php";
 	?>
 	<link rel="stylesheet" href="/assets/styles/base.css">
 	<link rel="stylesheet" href="/assets/librarys/tailwind/tailwind-index.min.css">
@@ -13,11 +19,11 @@
 
 </head><body><div class="page-wrapper">
 
-	<?php require_once $sp."/require/header.php"; ?>
+	<?php require_once $server_path."/require/header.php"; ?>
 	<main class="main">
-		<?php require_once $sp."/pages/cart.php"; ?>
+		<?php require_once $server_path."/pages/cart.php"; ?>
 	</main>
-	<?php require_once $sp."/require/footer.php"; ?>
+	<?php require_once $server_path."/require/footer.php"; ?>
 
 </div><div class="scripts-wrapper">
 
@@ -25,5 +31,6 @@
 	<script src="/assets/librarys/validate/jquery.validate.min.js"></script>
 	<script src="/assets/librarys/maskedinput/jquery.inputmask.bundle.min.js"></script>
 	<script src="/assets/scripts/common.js"></script>
+	<script src="/assets/scripts/cart.js"></script>
 
 </div></body></html>

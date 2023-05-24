@@ -5,5 +5,5 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta name="author"content="Airat Timerbulatov" />
 
-<link rel="icon" type="image/png" href="/assets/images/favicon/favicon-512x512.png" sizes="512x512">
-<title><?=$title ?? 'Ещё одна страница сайта. '.$appn?></title>
+<link rel="icon" type="image/png" href="/assets/images/favicons/favicon.png" />
+<title><?=$title ?? 'Ещё одна страница сайта. '.$app_name?></title>
